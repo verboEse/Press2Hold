@@ -26,14 +26,17 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
-      - name: Get the version
+      - name: Get versions
         id: get_version
-        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+        run: |
+          echo "TAG_VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          MC_VERSION=$(grep "minecraft_version" gradle.properties | cut -d'=' -f2)
+          echo "MC_VERSION=$MC_VERSION" >> $GITHUB_OUTPUT
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          name: Press2Hold ${{ steps.get_version.outputs.VERSION }}
+          name: Press2Hold ${{ steps.get_version.outputs.MC_VERSION }}-${{ steps.get_version.outputs.TAG_VERSION }}
           files: |
             build/libs/*-all.jar
             build/libs/*.jar
