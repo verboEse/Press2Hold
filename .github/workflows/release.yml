@@ -38,8 +38,8 @@ jobs:
         with:
           name: Press2Hold ${{ steps.get_version.outputs.MC_VERSION }}-${{ steps.get_version.outputs.TAG_VERSION }}
           files: |
-            build/libs/*-all.jar
-            build/libs/*.jar
+            build/libs/press2hold-${{ steps.get_version.outputs.TAG_VERSION }}.jar
+            build/libs/press2hold-${{ steps.get_version.outputs.TAG_VERSION }}-sources.jar
           draft: false
           prerelease: false
           generate_release_notes: true
