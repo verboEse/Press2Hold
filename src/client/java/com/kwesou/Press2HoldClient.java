@@ -8,6 +8,7 @@ import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
+import net.minecraft.util.Identifier;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,10 +25,10 @@ public class Press2HoldClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		keyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-				"Latch down keys",
+				"key.press2hold.latch",
 				InputUtil.Type.KEYSYM,
 				GLFW_KEY_G,
-				"key.categories.misc"
+				KeyBinding.Category.create(Identifier.of("press2hold:press2hold"))
 		));
 
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
@@ -37,7 +38,7 @@ public class Press2HoldClient implements ClientModInitializer {
 
 				if (isLatched && (!pressedKeys.isEmpty() || !pressedMouseButtons.isEmpty())) {
 					for (int key : pressedKeys) {
-						InputUtil.Key keyObj = InputUtil.fromKeyCode(key, 0);
+						InputUtil.Key keyObj = InputUtil.Type.KEYSYM.createFromCode(key);
 						KeyBinding.setKeyPressed(keyObj, true);
 						pressedKeyNames.add(getKeyName(key));
 					}
@@ -56,7 +57,7 @@ public class Press2HoldClient implements ClientModInitializer {
 					pressedKeyNames.clear();
 				} else {
 					for (int key : pressedKeys) {
-						InputUtil.Key keyObj = InputUtil.fromKeyCode(key, 0);
+						InputUtil.Key keyObj = InputUtil.Type.KEYSYM.createFromCode(key);
 						KeyBinding.setKeyPressed(keyObj, false);
 					}
 					for (int button : pressedMouseButtons) {
@@ -71,7 +72,7 @@ public class Press2HoldClient implements ClientModInitializer {
 			}
 			if (isLatched) {
 				for (int key : pressedKeys) {
-					InputUtil.Key keyObj = InputUtil.fromKeyCode(key, 0);
+					InputUtil.Key keyObj = InputUtil.Type.KEYSYM.createFromCode(key);
 					KeyBinding.setKeyPressed(keyObj, true);
 				}
 				for (int button : pressedMouseButtons) {
@@ -79,7 +80,7 @@ public class Press2HoldClient implements ClientModInitializer {
 				}
 			} else {
 				for (int key : pressedKeys) {
-					InputUtil.Key keyObj = InputUtil.fromKeyCode(key, 0);
+					InputUtil.Key keyObj = InputUtil.Type.KEYSYM.createFromCode(key);
 					KeyBinding.setKeyPressed(keyObj, false);
 				}
 				for (int button : pressedMouseButtons) {
@@ -115,7 +116,7 @@ public class Press2HoldClient implements ClientModInitializer {
 		int keyCode = keyBinding.getDefaultKey().getCode();
 
 		for (int key = GLFW.GLFW_KEY_SPACE; key <= GLFW.GLFW_KEY_LAST; key++) {
-			if (key != keyCode && InputUtil.isKeyPressed(windowHandle, key)) {
+			if (key != keyCode && glfwGetKey(windowHandle, key) == GLFW_PRESS) {
 				pressedKeys.add(key);
 			}
 		}
