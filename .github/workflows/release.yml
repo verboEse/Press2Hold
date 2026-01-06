@@ -24,7 +24,11 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew build
+        run: |
+          # ensure the built artifact uses the tag's mod version
+          TAG_VERSION=${GITHUB_REF#refs/tags/}
+          VERSION=${TAG_VERSION#v}
+          ./gradlew -Pmod_version=${VERSION} build
 
       - name: Get versions
         id: get_version
@@ -41,8 +45,14 @@ jobs:
         with:
           name: Press2Hold ${{ steps.get_version.outputs.MC_VERSION }}-${{ steps.get_version.outputs.TAG_VERSION }}
           files: |
+            # prefer exact match including Minecraft and mod version
+            build/libs/*-${{ steps.get_version.outputs.MC_VERSION }}-${{ steps.get_version.outputs.VERSION }}.jar
+            build/libs/*-${{ steps.get_version.outputs.MC_VERSION }}-${{ steps.get_version.outputs.VERSION }}-sources.jar
+            # fallbacks in case naming differs
             build/libs/*-${{ steps.get_version.outputs.VERSION }}.jar
             build/libs/*-${{ steps.get_version.outputs.VERSION }}-sources.jar
+            build/libs/*.jar
+            build/libs/*-sources.jar
           draft: false
           prerelease: false
           generate_release_notes: true
