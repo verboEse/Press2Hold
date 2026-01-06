@@ -8,6 +8,7 @@ import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
+import net.minecraft.util.Identifier;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,10 +25,10 @@ public class Press2HoldClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		keyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-				"Latch down keys",
+				"key.press2hold.latch",
 				InputUtil.Type.KEYSYM,
 				GLFW_KEY_G,
-				KeyBinding.Category.MISC
+				KeyBinding.Category.create(Identifier.of("press2hold:press2hold"))
 		));
 
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
