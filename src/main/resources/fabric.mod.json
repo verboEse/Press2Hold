@@ -19,18 +19,11 @@
 			"com.kwesou.Press2HoldClient"
 		]
 	},
-	"mixins": [
-		"press2hold.mixins.json",
-		{
-			"config": "press2hold.client.mixins.json",
-			"environment": "client"
-		}
-	],
 	"depends": {
 		"fabricloader": ">=0.19.2",
 		"minecraft": ">=26.1.2",
 		"java": ">=25",
-		"fabric": "*"
+		"fabric-api": "*"
 	},
 	"suggests": {
 		"another-mod": "*"
