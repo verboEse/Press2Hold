@@ -50,7 +50,7 @@ jobs:
             echo "Release ${tag} already exists, skipping."
             exit 0
           fi
-          mapfile -t jars < <(find build/libs -name '*.jar' ! -name '*-dev.jar' ! -name '*-dev-sources.jar')
+          mapfile -t jars < <(find build/libs -name '*.jar' ! -name '*-sources.jar' ! -name '*-dev.jar' ! -name '*-dev-sources.jar')
           if [[ ${#jars[@]} -eq 0 ]]; then
             echo "ERROR: No JAR files found in build/libs — build may have failed." >&2
             exit 1
