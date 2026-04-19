@@ -46,11 +46,13 @@ public class Press2HoldClient implements ClientModInitializer {
 						KeyMapping.set(InputConstants.Type.MOUSE.getOrCreate(button), true);
 						pressedKeyNames.add("MOUSE" + button);
 					}
-					assert client.player != null;
-					client.player.sendSystemMessage(Component.literal("Latching: " + pressedKeyNames.toString()));
+					if (client.player != null) {
+						client.player.sendSystemMessage(Component.literal("Latching: " + pressedKeyNames.toString()));
+					}
 				} else if (pressedKeys.isEmpty() && pressedMouseButtons.isEmpty()) {
-					assert client.player != null;
-					client.player.sendSystemMessage(Component.literal("Invalid inputs pressed"));
+					if (client.player != null) {
+						client.player.sendSystemMessage(Component.literal("Invalid inputs pressed"));
+					}
 					isLatched = false;
 					pressedKeys.clear();
 					pressedMouseButtons.clear();
@@ -66,8 +68,9 @@ public class Press2HoldClient implements ClientModInitializer {
 					pressedKeys.clear();
 					pressedMouseButtons.clear();
 					pressedKeyNames.clear();
-					assert client.player != null;
-					client.player.sendSystemMessage(Component.literal("Unlatched"));
+					if (client.player != null) {
+						client.player.sendSystemMessage(Component.literal("Unlatched"));
+					}
 				}
 			}
 			if (isLatched) {
