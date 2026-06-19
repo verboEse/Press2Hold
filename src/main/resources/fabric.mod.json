@@ -15,8 +15,8 @@
 	"icon": "assets/press2hold/icon.png",
 	"environment": "*",
 	"entrypoints": {
-		"client": [
-			"com.kwesou.Press2HoldClient"
+		"main": [
+			"com.kwesou.Press2Hold"
 		]
 	},
 	"depends": {
