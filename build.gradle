@@ -19,15 +19,11 @@ repositories {
 }
 
 loom {
-	splitEnvironmentSourceSets()
-
 	mods {
 		"press2hold" {
 			sourceSet sourceSets.main
-			sourceSet sourceSets.client
 		}
 	}
-
 }
 
 dependencies {
