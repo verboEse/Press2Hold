@@ -1,6 +1,6 @@
 # Press2Hold
 When you press a specific keybind, all currently pressed keys stay held until you release them manually by pressing the keybind again.\
-Because of the Java 25 requirement, only supports versions 26.1.2 and up.
+Because of the Java 25 requirement, only supports Minecraft 26.3 and up.
 
 ## Local Java Setup
 
@@ -18,4 +18,4 @@ CI should provide Java 25 via its own environment setup (for example through `ac
 
 Known issues:\
 When the keybind is changed from the default the mod will also hold down that key. Doesn't affect functionality, just looks ugly. \
-Some keys (most notably the entire function row) won't show the key, but their GLFW key token.
+Some keys (most notably the entire function row) won't show the key, but their input key token.
